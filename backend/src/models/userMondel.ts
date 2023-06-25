@@ -16,6 +16,10 @@ const userSchema = new Schema(
       required: [true, "Please enter a password."],
       minLength: [8, "Password should contain minimun of 8 characters"],
     },
+    mobileNumber: {
+      type: Number,
+      default: null,
+    },
     role: {
       type: Number,
       enum: [0, 1, 2],

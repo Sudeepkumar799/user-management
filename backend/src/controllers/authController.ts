@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import UserModal from "../models/user";
+import UserModal from "../models/userMondel";
 
 export const signup = async (
   req: Request,

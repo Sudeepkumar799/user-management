@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import UserModal from "../models/user";
+import UserModal from "../models/userMondel";
 
 export const getUsers = async (
   req: Request,
