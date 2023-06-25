@@ -2,11 +2,25 @@ import { InferSchemaType, Schema, model } from "mongoose";
 
 const userSchema = new Schema(
   {
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    mobileNumber: { type: Number, required: true },
-    emailId: { type: String, required: true },
-    role: { type: Number, required: true },
+    name: {
+      type: String,
+      required: [true, "Please enter your name."],
+    },
+    emailId: {
+      type: String,
+      required: [true, "Please enter your emailId."],
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: [true, "Please enter a password."],
+      minLength: [8, "Password should contain minimun of 8 characters"],
+    },
+    role: {
+      type: Number,
+      enum: [0, 1, 2],
+      default: 2,
+    },
   },
   { timestamps: true }
 );

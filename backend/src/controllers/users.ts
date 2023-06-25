@@ -34,14 +34,7 @@ export const createUser = async (
   next: NextFunction
 ) => {
   try {
-    const { firstName, lastName, mobileNumber, emailId, role } = req.body;
-    const newUser = await UserModal.create({
-      firstName,
-      lastName,
-      mobileNumber,
-      emailId,
-      role,
-    });
+    const newUser = await UserModal.create(req.body);
     res.status(200).json(newUser);
   } catch (error) {
     next(error);
@@ -55,14 +48,12 @@ export const updateUser = async (
 ) => {
   try {
     const userId = req.params.userId;
-    const { firstName, lastName, mobileNumber, emailId, role } = req.body;
+    const { name, emailId, role } = req.body;
     const updatedUser = await UserModal.findOneAndUpdate(
       { _id: userId },
       {
         $set: {
-          firstName,
-          lastName,
-          mobileNumber,
+          name,
           emailId,
           role,
         },
@@ -85,7 +76,7 @@ export const deleteUser = async (
   try {
     const userId = req.params.userId;
     const user = await UserModal.findByIdAndDelete({ _id: userId }).exec();
-    res.status(200).send(`${user?.firstName} has been removed`);
+    res.status(200).send(`${user?.name} has been removed`);
   } catch (error) {
     next(error);
   }
