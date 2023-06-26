@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import UserModal from "../models/userMondel";
+import jwt from "jsonwebtoken";
+import UserModal from "../models/userModel";
+import env from "../utils/validateEnv";
 
 export const getUsers = async (
   req: Request,
@@ -14,15 +16,42 @@ export const getUsers = async (
   }
 };
 
+interface JwtPayload {
+  id: string;
+  iat: number;
+  exp: number;
+}
+
 export const getUser = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const userId = req.params.userId;
-    const user = await UserModal.findById(userId).exec();
-    res.status(200).json(user);
+    const authToken = req?.cookies?.authToken ?? null;
+    if (typeof authToken === "string" && authToken !== "") {
+      const tokenData = jwt.verify(
+        authToken,
+        env.JWT_SECRETE_KEY
+      ) as JwtPayload;
+
+      if (typeof tokenData?.id && tokenData?.id !== "") {
+        const user = await UserModal.findById(tokenData.id).exec();
+        res.status(200).json(user);
+      } else {
+        res.status(401).json({
+          status: "fail",
+          statusCode: 401,
+          data: null,
+        });
+      }
+    } else {
+      res.status(401).json({
+        status: "fail",
+        statusCode: 401,
+        data: null,
+      });
+    }
   } catch (error) {
     next(error);
   }
