@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "backend": "cd ../backend && npm run start",
+    "all": "concurrently --names \"Backend,Frontend\" -c \"red,blue\" \"npm run backend\" \"npm run dev\""
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
