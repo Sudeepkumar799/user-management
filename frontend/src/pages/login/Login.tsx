@@ -1,5 +1,4 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Avatar from "@mui/material/Avatar";
@@ -11,13 +10,9 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import axiosInstance from "../../utils/axiosInstance";
-import { fetchUsersList } from "../../services";
 
-export default function SignUp() {
+export default function Login() {
   const navigate = useNavigate();
-  const { status, data, error } = useQuery(["users-list"], fetchUsersList);
-
-  console.log(status, data, error);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -57,19 +52,9 @@ export default function SignUp() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign Up
+          Login
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="name"
-            label="Name"
-            name="name"
-            autoComplete="name"
-            autoFocus
-          />
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
@@ -100,7 +85,7 @@ export default function SignUp() {
             sx={{ mt: 3, mb: 2 }}
             size="large"
           >
-            Sign Up
+            Login
           </Button>
         </Box>
       </Box>
